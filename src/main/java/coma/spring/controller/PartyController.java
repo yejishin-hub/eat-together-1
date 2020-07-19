@@ -240,6 +240,11 @@ public class PartyController {
 			MemberDTO account = (MemberDTO) session.getAttribute("loginInfo");
 			String age = account.getBirth();
 			request.setAttribute("age", age);
+			boolean isPartyfull = pservice.isPartyfull(seq);
+			PartyCountDTO getPartyCounts = pservice.getPartyCounts(seq);
+			
+			request.setAttribute("isPartyfull", isPartyfull);
+			request.setAttribute("getPartyCounts", getPartyCounts);
 		}catch(Exception e) {}
 		return "/party/party_modify";
 	}

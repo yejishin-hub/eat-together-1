@@ -469,5 +469,54 @@ public class AdminService {
 		String navi = this.faqgetPageNav(cpage);
 		return navi;
 	}
+	// 태훈 등록 맛집 갯수
+	public int mapCount() throws Exception{
+		return adao.mapCount();
+	}
+	
+	// 태훈 미 접수 신고 수 가져오기
+	public int reportCount() throws Exception {
+		return adao.reportCount();
+	}
+	// 태훈 미 답변 문의 수 가져오기
+	public int	questionCount() throws Exception {
+		return adao.questionCount();
+	}
+	// 태훈 연령별 회원 수
+	public Map<String, Integer> memberCountByAge() throws Exception {
+		//Map<Integer, Integer> age = new HashMap<>();
+		Map<String, Integer> age = new HashMap<>();
+		//List<Map<Integer,Integer>> ageList = adao.memberCountByAge();
+		List<Map<String,Integer>> ageList = adao.memberCountByAge();
+		for (int i=0; i<ageList.size();i++) {
+			age.put(String.valueOf(ageList.get(i).get("연령")), ageList.get(i).get("수"));
+			System.out.println(age);
+		}
+		for (int i=1; i<6; i++) {
+			if(!(age.containsKey((i*10)+"대"))) {
+				age.put((i*10)+"대",0);
+			}
+			System.out.println(age);
+		}
+		
+		return age;
+	}
+	// 태훈 요일별 모집 수
+	public Map<String, Integer> partyCountByDay() throws Exception {
+		Map<String, Integer> party = new HashMap<>();
+		List<Map<String,Integer>> partyList = adao.partyCountByDay();
+		for (int i=0; i<partyList.size();i++) {
+			party.put(String.valueOf(partyList.get(i).get("요일")), partyList.get(i).get("수"));
+			System.out.println(party);
+		}
+		for (int i=1; i<8; i++) {
+			if(!(party.containsKey(String.valueOf(i)))) {
+				party.put(String.valueOf(i),0);
+			}
+			System.out.println(party);
+		}
+
+		return party;
+	}
 
 }

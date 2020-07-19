@@ -14,10 +14,9 @@
 	src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script
 	src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/resources/css/admin.css">
 <title>Admin-회원관리</title>
 <!-- admine용 css  -->
-<link rel="stylesheet" type="text/css" href="/resources/css/admin.css">
+<link rel="stylesheet" type="text/css" href="/resources/css/admin.css?ver=1">
 <!-- ******************* -->
 <style>
 	#toOut{background-color:#fcbb42;border:1px solid #ffa500;}

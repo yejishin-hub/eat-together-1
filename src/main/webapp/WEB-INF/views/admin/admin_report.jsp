@@ -18,7 +18,6 @@
 <link rel="stylesheet" type="text/css" href="/resources/css/admin.css">
 <title>Admin-신고관리</title>
 <script>
-
 $(function(){
 	$(".reportView").on("click",function(){
 		console.log($(this).siblings(".seq").val());
@@ -42,12 +41,13 @@ $(function(){
 				$(".modal-body #category").html("회원 신고 (code:2)");
 			}
 			
-			
 			$(".modal-body #report_date").html(resp.report_date);
 			$(".modal-body #title").html(resp.title);
 			$(".modal-body #content").html(resp.content);	
 			if(resp.status == 0){
 				$(".modal-body #status").html("접수 대기");
+				$("#refuse").css("display", "block");
+				$("#accept").css("display", "block");
 			}
 			else if(resp.status == 1){
 				$(".modal-body #status").html("접수 완료");
@@ -57,10 +57,6 @@ $(function(){
 			}
 			$(".modal-body #status").html();
 			$(".modal-body #parent_seq").html(resp.parent_seq);
-			if($(".modal-body #status").html() == 0){
-				$("#refuse").css("display", "block");
-				$("#accept").css("display", "block");
-			}
 			$("#mymodal").modal();
 		})
 	});
@@ -102,7 +98,8 @@ $(function(){
 				}
 			});	
 		}
-	})
+	});
+	
 });
 
 
@@ -116,6 +113,9 @@ th , td{
 }
 .title{
 	width:50%;
+}
+.ready{
+	color:red;
 }
 </style>
 </head>
@@ -136,9 +136,9 @@ th , td{
 						<button type="button" class="btn btn-warning" onclick="location.href='Category_list?cpage=1&category=1'">모임글</button>
 						<button type="button" class="btn btn-dark" onclick="location.href='Category_list?cpage=1&category=2'">회원</button>
 						<button type="button" class="btn btn-dark" onclick="location.href='toAdmin_report'">전체</button>
+						
 					</div>
 				</div>
-
 				<div class="row">
 					<div class="col-12  col-sm-12">
 						<div class="row">
@@ -176,16 +176,14 @@ th , td{
 												<td>${i.id}</td>	
 												<td>${i.report_id}</td>
 												<td>${i.sdate}</td>
-												<td>
-													<c:choose>
-														<c:when test="${i.status == 0}">
-															접수 대기
-														</c:when>
-														<c:otherwise>
-															접수 완료
-														</c:otherwise>
-													</c:choose>
-												</td>
+												<c:choose>
+													<c:when test="${i.status == 0}">
+														<td class="ready">접수 대기</td>
+													</c:when>
+													<c:otherwise>
+														<td>접수 완료</td>
+													</c:otherwise>
+												</c:choose>
 												<td>
 													<button type="button"  class="btn btn-secondary reportView" data-toggle="modal" data-target="#staticBackdrop">
   														상세 내용

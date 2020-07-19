@@ -125,4 +125,39 @@
 	<select id="getReportContent" resultType="coma.spring.dto.ReportDTO">
 		select * from report where seq = #{seq}
 	</select>
+	<!-- 태훈 등록 맛집 갯수 -->
+	<select id="mapCount" resultType="int">
+		select count(*) from map
+	</select>
+	<!-- 태훈 미 접수 신고 갯수 -->
+	<select id="reportCount" resultType="int">
+		select count(*) from report where status = 0
+	</select>
+	<!-- 태훈 미 답변 문의 갯수 -->
+	<select id="questionCount" resultType="int">
+		select count (*) from msg
+		where msg_title like '%[1:1문의]%' and msg_sender != 'administrator' and sender_del=0 and msg_view &lt; 2
+	</select>
+	<!-- 태훈 연령대 별 회원 수 -->
+	<select id="memberCountByAge" resultMap="agemap">
+		<!-- select 연령 , count(*) as 수 from(select case when floor((to_char(sysdate, 'YYYY') -SUBSTR(birth,1,4)) / 10) * 10 >= 50 then 50 else (floor((to_char(sysdate, 'YYYY') -SUBSTR(birth,1,4)) / 10) * 10)  end as 연령 from member) o group by 연령 order by 연령 asc -->
+		select 연령 , count(*) as 수 from(select case when floor((to_char(sysdate, 'YYYY') -SUBSTR(birth,1,4)) / 10) * 10 >= 50 then '50대' else (floor((to_char(sysdate, 'YYYY') -SUBSTR(birth,1,4)) / 10) * 10)||'대'  end as 연령 from member) o group by 연령 order by 연령 asc
+	</select>	
+	<!-- 태훈 위 쿼리 위한 맵 -->
+	<resultMap type="hashMap" id="agemap">
+	    <!-- <result javaType="java.lang.Integer" column="연령" property="연령"></result> -->
+	    <result javaType="java.lang.String" column="연령" property="연령"></result>
+	    <result javaType="java.lang.Integer" column="수" property="수"></result>
+	</resultMap>
+	<!-- 태훈 요일별 모집 개수 -->
+	<select id="partyCountByDay" resultMap="partymap">
+		select 요일 , count(*) as 수 from (select to_char(meetdate, 'd') as 요일 from party) group by 요일 order by 요일 asc
+	</select>
+	<!-- 태훈 위 쿼리 위한 맵 -->
+	<resultMap type="hashMap" id="partymap">
+	    <result javaType="java.lang.String" column="요일" property="요일"></result>
+	    <result javaType="java.lang.Integer" column="수" property="수"></result>
+	</resultMap>
+	
+
 </mapper>

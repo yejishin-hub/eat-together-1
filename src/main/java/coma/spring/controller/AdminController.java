@@ -1,7 +1,9 @@
 package coma.spring.controller;
 
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -25,13 +27,11 @@ import coma.spring.dto.ReportDTO;
 import coma.spring.dto.ReviewDTO;
 import coma.spring.service.AdminService;
 import coma.spring.service.FaqService;
-import coma.spring.service.MemberService;
 import coma.spring.service.MsgService;
 import coma.spring.service.PartyService;
 import coma.spring.service.QuestionService;
 import coma.spring.service.ReportService;
 import coma.spring.service.ReviewService;
-import coma.spring.statics.Configuration;
 
 
 @Controller
@@ -46,10 +46,10 @@ public class AdminController {
 
 	@Autowired
 	private PartyService pservice;
-
+	
 	@Autowired
 	private QuestionService qservice;
-
+	
 	@Autowired
 	private MsgService msgservice;
 	
@@ -63,8 +63,6 @@ public class AdminController {
 	@Autowired
 	private ReportService reportservice;
 	
-	@Autowired
-	private MemberService mservice;
 
 	@ExceptionHandler
 	public String exceptionHandler(NullPointerException npe) {
@@ -74,10 +72,34 @@ public class AdminController {
 	}
 
 	@RequestMapping("toAdmin")
-	public String toAdmin() {
+	public String toAdmin(HttpServletRequest request) throws Exception {
 		MemberDTO loginInfo = (MemberDTO)session.getAttribute("loginInfo");
 		String adminCheck = loginInfo.getId();
 		if(adminCheck.contentEquals("administrator")) {
+			
+			int totalMember = aservice.getAllMemberCount();
+			request.setAttribute("member", totalMember);
+			
+			int totalParty = pservice.selectAllCount();
+			request.setAttribute("totalparty", totalParty);
+			
+			int totalMap = aservice.mapCount();
+			request.setAttribute("map", totalMap);
+			
+			int reportCount = aservice.reportCount();
+			request.setAttribute("reportCount", reportCount);
+			
+			int questionCount = aservice.questionCount();
+			request.setAttribute("questionCount", questionCount);
+			
+			//Map<Integer, Integer> age = new HashMap<>();
+			Map<String, Integer> age = new HashMap<>();
+			age = aservice.memberCountByAge();
+			
+			//Map<String, Integer> party = new HashMap<>();
+			
+			request.setAttribute("age", age);
+			request.setAttribute("party", aservice.partyCountByDay());
 			return "/admin/admin_main";
 		}
 		else {
