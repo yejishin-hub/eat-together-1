@@ -37,16 +37,10 @@
 
 #loginBtn{
     font-family: 'Noto Sans KR', sans-serif;
-    margin-top: 10px;
-     margin-left: 10px;
-    float: left;
 } 
 
 #SignupBtn{
     font-family: 'Noto Sans KR', sans-serif;
-    margin-top: 10px;
-    margin-left: 10px;
-    float: left;
 }
 
  #kakaoLoginBtn> img{
