@@ -30,7 +30,7 @@
 <!-- header,footer용 css  -->
 <!-- loginview css -->
 <link rel="stylesheet" type="text/css"
-	href="/resources/css/loginview.css">
+	href="/resources/css/loginview.css?a">
 <!-- loginview css -->
 
 <meta charset="UTF-8">
