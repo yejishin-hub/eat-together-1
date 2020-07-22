@@ -93,7 +93,7 @@
 															<td class="admin_text">${i.id}</td>
 															<td class="admin_text">${i.nickname}</td>
 															<td class="admin_text">${i.birth}</td>
-															<td class="admin_text" id='gender'>${i.gender}</td>
+															<td class="admin_text gender">${i.gender}</td>
 															<td class="admin_text">${i.account_email}</td>
 															<td class="admin_text">${i.sdate}</td>
 															<td class="admin_text">${i.report_count}</td>
@@ -129,12 +129,12 @@
 
 	</div>
 	<script>
-		//by 지은, 성별의 int 값을 jsp에서 남여로 출력하는 과정_20200708
-		var gender = $("#gender").val();
+		//by 지은, 성별의 int 값을 jsp에서 남여로 출력하는 과정_202007020
+		var gender = $(".gender").html();
 		if (gender == 1) {
-			$("#gender_text").html("남");
-		} else {
-			$("#gender_text").html("여");
+			$(".gender").html("남");
+		} else if(gender == 2){
+			$(".gender").html("여");
 		}
 
 		//by 지은, 탈퇴하고자 하는 회원의 id를 배열로 생성, ajax로 삭제처리한다_20200713

@@ -61,5 +61,8 @@ public class MapDAO {
 	public List<MapDTO> selectTopStore(){	
 		return mybatis.selectList("Map.topStore");
 	}
+	public int updateRatingAvgZero(int seq) {
+		return mybatis.update("Map.updateRatingAvgZero",seq);
+	}
 	
 }

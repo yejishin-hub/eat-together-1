@@ -48,24 +48,16 @@ public class ReportController {
 		rdto = (ReportDTO)map.get("rdto");
 		int check = reposervice.checkDupl(rdto);
 		
-		// 로그인 세션 받아오기
-		MemberDTO mdto = (MemberDTO)session.getAttribute("loginInfo");
-		String nickname = null;
-		try {nickname = mdto.getNickname();}catch(Exception e) {}
-		if(nickname == rdto.getId()) { // 로그인 세션에서 경우 
-			result = 2;
-		}else {
-			if(rdto.getCategory() == 0) { // 리뷰 신고
-				if(check == 0) {
-					result = rservice.report(rdto);
-				}
-			}else if(rdto.getCategory() == 1) { // 모임글 신고
-				if(check == 0) {
-					result = pservice.partyReport(rdto);
-				}
-			}else { // 회원 신고
-				result = mrservice.memberReport(rdto);
+		if(rdto.getCategory() == 0) { // 리뷰 신고
+			if(check == 0) {
+				result = rservice.report(rdto);
 			}
+		}else if(rdto.getCategory() == 1) { // 모임글 신고
+			if(check == 0) {
+				result = pservice.partyReport(rdto);
+			}
+		}else { // 회원 신고
+			result = mrservice.memberReport(rdto);
 		}
 		request.setAttribute("result", result);
 		return result;
@@ -81,6 +73,10 @@ public class ReportController {
 		int repoResult = reposervice.checkReport(Integer.parseInt(request.getParameter("seq")));
 		System.out.println("repoResult :"+repoResult);
 		if(repoResult == 1) {
+			int checkReal = reposervice.checkReal(Integer.parseInt(request.getParameter("category")), Integer.parseInt(request.getParameter("parent_seq")));
+			if(checkReal < 1) {
+				return 3;
+			}
 			result = reposervice.repoCountDown(Integer.parseInt(request.getParameter("category")), Integer.parseInt(request.getParameter("parent_seq")));
 			System.out.println("result1 : "+result);
 		}
@@ -97,8 +93,14 @@ public class ReportController {
 		int resp = 0;
 		int repoResult = reposervice.checkReport(seq);
 		if(repoResult ==1) {
-			int result1 = reposervice.checkOtherRepo(seq , category , parent_seq);
-			if(result1 == 1) {
+			int checkReal = reposervice.checkReal(Integer.parseInt(request.getParameter("category")), Integer.parseInt(request.getParameter("parent_seq")));
+			if(checkReal < 1) {
+				return 3;
+			}
+			if(category != 2) {
+				repoResult = reposervice.checkOtherRepo(seq , category , parent_seq);
+			}
+			if(repoResult == 1) {
 				System.out.println("report id : "+request.getParameter("report_id"));
 				int result=reposervice.acceptReport(request.getParameter("report_id"));
 				if(result == 1) {

@@ -7,7 +7,7 @@
 <meta charset="utf-8">
 <title>맛집지도</title>
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-<script src='/resources/js/map.js?asaaaasaaaaada'></script>
+<script src='/resources/js/map.js?asaaaaasaaaaada'></script>
 <link rel="stylesheet"
 	href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
 <script
@@ -281,8 +281,10 @@
 											<c:when test="${i.key.id eq 'unknown'}">
 											</c:when>
 											<c:otherwise>
-												<span class="bg_bar"></span>
-												<button type="button" class="btn btn-primary report" onClick="reviewReport(${i.key.seq},'<c:out value="${i.key.content}"></c:out>','${i.key.id}')">신고</button>
+												<c:if test="${i.key.id ne sessionScope.loginInfo.id}">
+													<span class="bg_bar"></span>
+													<button type="button" class="btn btn-primary report" onClick="reviewReport(${i.key.seq},'<c:out value="${i.key.content}"></c:out>','${i.key.id}')">신고</button>
+												</c:if>
 											</c:otherwise>
 										</c:choose>
 									</div>

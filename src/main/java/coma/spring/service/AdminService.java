@@ -290,20 +290,20 @@ public class AdminService {
 		StringBuilder sb = new StringBuilder("<nav aria-label='Page navigation'><ul class='pagination justify-content-center'>");
 
 		if(needPrev) {
-			sb.append("<li class='page-item'><a class='page-link' href='/admin/toAdmin_report?cpage="+(startNav-1)+"' id='prevPage' tabindex='-1' aria-disabled='true'>Previous</a></li>");
+			sb.append("<li class='page-item'><a class='page-link' href='/admin/partyByOption?cpage="+(startNav-1)+"' id='prevPage' tabindex='-1' aria-disabled='true'>Previous</a></li>");
 		}
 
 		for(int i=startNav; i<=endNav; i++) {
 			if(cpage == i) {
-				sb.append("<li class='page-item active' aria-current='page'><a class='page-link' href='/admin/toAdmin_report?cpage="+i+"'>"+i+"<span class=sr-only>(current)</span></a></li>");
+				sb.append("<li class='page-item active' aria-current='page'><a class='page-link' href='/admin/partyByOption?cpage="+i+"'>"+i+"<span class=sr-only>(current)</span></a></li>");
 				//sb.append("<li class='page-item active' aria-current='page'>"+i+"<span class='sr-only'>(current)</span></li>");
 			}else {
-				sb.append("<li class='page-item'><a class='page-link' href='/admin/toAdmin_report?cpage="+i+"'>"+i+"</a></li>");
+				sb.append("<li class='page-item'><a class='page-link' href='/admin/partyByOption?cpage="+i+"'>"+i+"</a></li>");
 			}
 		}
 
 		if(needNext) {
-			sb.append("<li class=page-item><a class=page-link href='/admin/toAdmin_report?cpage="+(endNav+1)+"' id='nextPage'>다음</a></li> ");
+			sb.append("<li class=page-item><a class=page-link href='/admin/partyByOption?cpage="+(endNav+1)+"' id='nextPage'>다음</a></li> ");
 		}		
 		sb.append("</ul></nav>");
 		return sb.toString();
@@ -469,6 +469,40 @@ public class AdminService {
 		String navi = this.faqgetPageNav(cpage);
 		return navi;
 	}
+
+	//삭제된 받은 쪽지함
+	public List<MsgDTO> selectBySendDel(int cpage) throws Exception{
+		List<MsgDTO> dto = adao.selectBySendDel(cpage);
+		return dto;
+	}
+	//관리자 삭제된 받은  쪽지함 네비
+	public String SendDelnavi (int cpage) throws Exception{
+		String navi = adao.getSendDelPageNav(cpage);
+		return navi;
+	}
+	//관리자 삭제된 받은 쪽지 검색 네비
+	public List<MsgDTO> selectByDelSearch(int cpage,String msg_receiver) throws Exception{
+		List<MsgDTO> dto = adao.selectByDelSearch(cpage,msg_receiver);
+		return dto;
+	}
+	//관리자 삭제된 받은  쪽지함 검색 네비
+	public String SearchDelnavi (int cpage,String msg_receiver) throws Exception{
+		String navi = adao.getDelSearchPageNav(cpage,msg_receiver);
+		return navi;
+	}
+	//관리자 삭제된 페이지 쪽지 살리기
+	public int saveMsgSend(String[] checkList)throws Exception{
+		List<String> list = new ArrayList<String>();
+		for(int a=0;a<checkList.length;a++) {
+			list.add(checkList[a]);
+		}
+		return adao.saveMsgSend(list);
+	}
+	//관리자 페이지 휴지통 비우기
+	public int msgDelete()throws Exception{
+		return adao.msgDelete();
+	}
+
 	// 태훈 등록 맛집 갯수
 	public int mapCount() throws Exception{
 		return adao.mapCount();

@@ -66,7 +66,7 @@ $(function(){
 		if(check){			
 			var seq = $(".modal-title").html().substring(1);
 			var parent_seq = $("#parent_seq").html();
-			var category = $("#category").html();
+			var category = $("#category").html().substr(-2,1);
 			console.log(seq);
 			$.ajax({
 				url:"/report/reportRefuse",	
@@ -74,6 +74,9 @@ $(function(){
 			}).done(function(resp){
 				if(resp==1){
 					alert("정상적으로 처리 되었습니다.");
+					location.reload();
+				}else{
+					alert("이미 삭재 된 글 / 회원 입니다.");
 					location.reload();
 				}
 			});
@@ -85,8 +88,9 @@ $(function(){
 		if(check){
 			var seq = $(".modal-title").html().substring(1);
 			var parent_seq = $("#parent_seq").html();
-			var category = $("#category").html();
+			var category = $("#category").html().substr(-2,1);
 			var report_id = $("#report_id").html();
+
 			console.log(seq);
 			$.ajax({
 				url:"/report/reportAccept",	
@@ -94,6 +98,9 @@ $(function(){
 			}).done(function(resp){
 				if(resp==1){
 					alert("정상적으로 처리 되었습니다.");
+					location.reload();
+				}else{
+					alert("이미 삭재 된 글 / 회원 입니다.");
 					location.reload();
 				}
 			});	

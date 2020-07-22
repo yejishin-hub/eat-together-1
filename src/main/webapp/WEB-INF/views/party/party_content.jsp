@@ -90,6 +90,8 @@ function partyReport(num){
 		
 		data : { seq : num, report_id : report_id , title : title , content : content},
 		success : function(result) {
+			console.log("신고 접수");
+			console.log(result);
 			if (result == 1){ 
 				alert("신고가 정상적으로 접수되었습니다.");	
 				

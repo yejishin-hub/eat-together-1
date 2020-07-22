@@ -57,27 +57,20 @@ function partyReport(num, report_id, title, content){
 function reviewReport(seq,content,id){
 	var ask = confirm("허위신고일 경우 피해가 되돌아올 수 있습니다. \n정말 신고하시겠습니까?\n신고할 사용자 : "+id+"\n신고할 리뷰 내용 : "+content);
 	if(ask){
-		/*if($("#loginInfo_id").html() == id){
-			alert("본인이 작성한 글은 신고할 수 없습니다.");
-		}
-		else{*/
-			$.ajax({
-				url:"/review/report",
-				data : { seq : seq, report_id : id , content : content},
-				success : function(result) {
-					if (result == 1){ 
-						alert("신고가 정상적으로 접수되었습니다.");	
-					}else if(result == 0){
-						alert("무분별한 신고를 방지하기 위해 신고는 한번만 가능합니다.");
-					}else if(result == 2){
-						alert("본인이 작성한 글은 신고할 수 없습니다.");
-					}
-				},
-				error:function(e){
-					console.log("error");
+		$.ajax({
+			url:"/review/report",
+			data : { seq : seq, report_id : id , content : content},
+			success : function(result) {
+				if (result == 1){ 
+					alert("신고가 정상적으로 접수되었습니다.");	
+				}else if(result == 0){
+					alert("무분별한 신고를 방지하기 위해 신고는 한번만 가능합니다.");
 				}
-			});
-		/*}*/
+			},
+			error:function(e){
+				console.log("error");
+			}
+		});
 	}
 }
 

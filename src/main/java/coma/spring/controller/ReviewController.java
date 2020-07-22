@@ -138,7 +138,7 @@ public class ReviewController {
 		// 체크 리스트
 		for(int parent_seq : set) {
 			if(rservice.getCountByParentSeq(parent_seq) == 0) {
-				
+				mapservice.updateRatingAvgZero(parent_seq);
 			}else{
 				mapservice.updateRatingAvg(parent_seq);
 			}
